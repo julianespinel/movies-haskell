@@ -16,3 +16,17 @@ Comment json -- Adding "json" causes ToJSON and FromJSON instances to be derived
     userId UserId Maybe
     deriving Eq
     deriving Show
+
+Movie json
+    imdbId Text
+    title Text
+    runtimeInMinutes Int
+    releaseDate UTCTime
+    filmRating FilmRating
+    genre Text
+    director Text
+    plot Text
+    metascore Int
+    imdbRating Double
+    imdbVotes Int
+    UniqueImdbId imdbId -- unique constraint
