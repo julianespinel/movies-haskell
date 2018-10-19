@@ -9,6 +9,9 @@
 
 / HomeR GET POST
 
+/movies          MoviesR GET POST
+/movies/#MovieId MovieR  GET PUT DELETE
+
 /comments CommentR POST
 
 /profile ProfileR GET
