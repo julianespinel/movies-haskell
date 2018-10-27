@@ -4,38 +4,15 @@ module Handler.MoviesSpec (spec) where
 
 import TestImport
 import Data.Aeson
-import FilmRating
-import qualified Text.Read as TR
+import TestFactories
 
 spec :: Spec
 spec = withApp $ do
     describe "creates a movie" $ do
         it "returns 201 and movie is created in DB" $ do
             let imdbId = "imdbId" :: Text
-                title = "movieTitle" :: Text
-                runtimeInMinutes = 1 :: Int
-                releaseDate = "1999-03-31 00:00:00.000Z" :: Text
-                filmRating = "R" :: Text
-                genre = "Sci-Fi" :: Text
-                director = "The Wachowski brothers" :: Text
-                plot = "plot" :: Text
-                metascore = 90 :: Int
-                imdbRating = 8.3 :: Double
-                imdbVotes = 123 :: Int
-
-                body = object [ "imdbId" .= imdbId,
-                                "title" .= title,
-                                "runtimeInMinutes" .= runtimeInMinutes,
-                                "releaseDate" .= releaseDate,
-                                "filmRating" .= filmRating,
-                                "genre" .= genre,
-                                "director" .= director,
-                                "plot" .= plot,
-                                "metascore" .= metascore,
-                                "imdbRating" .= imdbRating,
-                                "imdbVotes" .= imdbVotes
-                              ]
-                encodedMovie = encode body
+                testMovie = getTestMovie imdbId
+                encodedMovie = encode testMovie
 
             request $ do
                 setMethod "POST"
@@ -77,20 +54,8 @@ spec = withApp $ do
 
         it "returns 200 and a non-empty list" $ do
           let imdbId = "imdbId" :: Text
-          let movie = Movie {
-            movieImdbId=imdbId,
-            movieTitle="movieTitle",
-            movieRuntimeInMinutes=90,
-            movieReleaseDate=(TR.read "1999-03-31 00:00:00.000Z") :: UTCTime,
-            movieFilmRating=FilmRating.R,
-            movieGenre="Sci-Fi",
-            movieDirector="Any",
-            moviePlot="Some plot",
-            movieMetascore=89,
-            movieImdbRating=7.8,
-            movieImdbVotes=12345
-          }
-          _ <- runDB $ insert movie
+              testMovie = getTestMovie imdbId
+          _ <- runDB $ insert testMovie
 
           get MoviesR
           statusIs 200
