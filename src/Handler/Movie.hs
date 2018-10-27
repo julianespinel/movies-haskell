@@ -19,7 +19,4 @@ putMovieR movieId = do
 deleteMovieR :: MovieId -> Handler Value
 deleteMovieR movieId = do
   runDB $ delete movieId
-  -- let response = Map.fromList [("deleted", True)]
   return $ object [("deleted" .= (True))]
-  -- return $ object [("msg" .= ("Hello world" :: String))]
-  -- returnJson response
