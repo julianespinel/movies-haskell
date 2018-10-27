@@ -1,6 +1,10 @@
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+
 module Handler.Movies where
 
 import Import
+import Database.Persist.Sql (rawSql)
 
 postMoviesR :: Handler Value
 postMoviesR = do
@@ -13,5 +17,30 @@ postMoviesR = do
 
 getMoviesR :: Handler Value
 getMoviesR = do
-  movies <- runDB $ selectList [] [] :: Handler [Entity Movie]
+  params <- reqGetParams <$> getRequest
+  movies <- getMovies params
   returnJson movies
+
+getMovies :: [a] -> Handler [Entity Movie]
+getMovies [] = runDB $ selectList [] []
+getMovies _ = getMoviesFilter
+
+getAllMovies :: Handler [Entity Movie]
+getAllMovies = runDB $ selectList [] [] :: Handler [Entity Movie]
+
+wrap :: Text -> Maybe Text -> Maybe Text
+wrap wrapper (Just word) = Just(wrapper ++ word ++ wrapper)
+wrap wrapper Nothing     = Just(wrapper)
+
+getMoviesFilter :: Handler [Entity Movie]
+getMoviesFilter = do
+  title <- lookupGetParam "title"
+  runtimeInMinutes <- lookupGetParam "runtimeInMinutes"
+  metascore <- lookupGetParam "metascore"
+  imdbRating <- lookupGetParam "imdbRating"
+  imdbVotes <- lookupGetParam "imdbVotes"
+  let values = [(wrap "%" title), runtimeInMinutes, metascore, imdbRating, imdbVotes]
+  runDB $ rawSql sql $ map toPersistValue values
+    where sql = "SELECT ?? FROM movie WHERE title LIKE ? AND \
+                \runtime_in_minutes >= ? AND metascore >= ? AND \
+                \imdb_rating >= ? AND imdb_votes >= ?"
