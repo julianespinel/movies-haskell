@@ -13,9 +13,3 @@ derivePersistField "FilmRating"
 
 instance FromJSON FilmRating
 instance ToJSON FilmRating
--- instance FromJSON FilmRating where
---   parseJSON (String "G") = return G
---   parseJSON (String "PG") = return PG
---   parseJSON (String "PG-13") = return PG_13
---   parseJSON (String "R") = return R
---   parseJSON (String "NC-17") = return NC_17
