@@ -33,7 +33,8 @@ spec = withApp $ do
                                 "plot" .= plot,
                                 "metascore" .= metascore,
                                 "imdbRating" .= imdbRating,
-                                "imdbVotes" .= imdbVotes]
+                                "imdbVotes" .= imdbVotes
+                              ]
                 encodedMovie = encode body
 
             request $ do
