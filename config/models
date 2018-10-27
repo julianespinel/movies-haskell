@@ -29,4 +29,4 @@ Movie json
     metascore Int
     imdbRating Double
     imdbVotes Int
-    UniqueImdbId imdbId -- unique constraint
+    Primary imdbId -- Primary key
