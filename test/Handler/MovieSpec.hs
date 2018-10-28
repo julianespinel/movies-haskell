@@ -16,6 +16,7 @@ spec = withApp $ do
 
           get("/movies/" ++ imdbId :: Text)
           statusIs 200
+          bodyContains "movie"
           bodyContains $ unpack imdbId
 
         it "returns 404 when movie does not exist" $ do
@@ -40,6 +41,7 @@ spec = withApp $ do
               addRequestHeader ("Content-Type", "application/json")
 
           statusIs 200
+          bodyContains "movie"
           bodyContains $ unpack imdbId
           bodyNotContains $ unpack (movieTitle testMovie)
           bodyContains $ unpack updatedTitle

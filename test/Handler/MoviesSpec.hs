@@ -22,6 +22,7 @@ spec = withApp $ do
 
             -- Check http response.
             statusIs 201
+            bodyContains "movie"
             bodyContains $ unpack imdbId
 
             -- Check movie was saved in DB.
@@ -47,6 +48,7 @@ spec = withApp $ do
             let imdbId = "imdbId" :: Text
             get MoviesR
             statusIs 200
+            bodyContains "movies"
             bodyNotContains $ unpack imdbId
             -- Check there are no movies in DB.
             moviesCount <- runDB $ count ([] :: [Filter Movie])
@@ -59,6 +61,7 @@ spec = withApp $ do
 
           get MoviesR
           statusIs 200
+          bodyContains "movies"
           bodyContains $ unpack imdbId
           -- Check there is one movies in DB.
           moviesCount <- runDB $ count ([] :: [Filter Movie])
