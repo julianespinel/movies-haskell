@@ -3,8 +3,6 @@
 module Handler.PingSpec (spec) where
 
 import TestImport
-import Data.Aeson
-import TestFactories
 
 spec :: Spec
 spec = withApp $ do
