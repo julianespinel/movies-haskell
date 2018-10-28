@@ -44,6 +44,7 @@ import Handler.Common
 import Handler.Home
 import Handler.Comment
 import Handler.Profile
+import Handler.Ping
 import Handler.Movie
 import Handler.Movies
 

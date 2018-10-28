@@ -9,6 +9,9 @@
 
 / HomeR GET POST
 
+/admin AdminR:
+  /ping AdminPingR GET
+
 /movies          MoviesR GET POST
 /movies/#MovieId MovieR  GET PUT DELETE
 

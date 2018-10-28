@@ -163,6 +163,7 @@ instance Yesod App where
     isAuthorized (AuthR _) _ = return Authorized
     isAuthorized CommentR _ = return Authorized
     isAuthorized HomeR _ = return Authorized
+    isAuthorized (AdminR _) _ = return Authorized
     isAuthorized MoviesR _ = return Authorized
     isAuthorized (MovieR _) _ = return Authorized
     isAuthorized FaviconR _ = return Authorized
