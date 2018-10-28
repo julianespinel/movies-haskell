@@ -17,9 +17,14 @@ getMovieR movieId = do
 
 putMovieR :: MovieId -> Handler Value
 putMovieR movieId = do
-  movie <- requireJsonBody :: Handler Movie
-  runDB $ replace movieId movie
-  return $ object ["movie" .= (Entity movieId movie)]
+  maybeMovie <- runDB $ get movieId
+  case maybeMovie of
+    Just(_) -> do
+      movie <- requireJsonBody :: Handler Movie
+      runDB $ replace movieId movie
+      return $ object ["movie" .= (Entity movieId movie)]
+    Nothing -> do
+      sendStatusJSON notFound404 movieNotFoundError
 
 deleteMovieR :: MovieId -> Handler Value
 deleteMovieR movieId = do
