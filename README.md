@@ -49,7 +49,9 @@ curl http://localhost:3000/admin/ping
 
 **Response**
 ```json
-{"message":"pong"}
+{
+    "message": "pong"
+}
 ```
 
 ### 2. Create a movie
