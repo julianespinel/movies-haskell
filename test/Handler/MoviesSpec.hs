@@ -66,3 +66,28 @@ spec = withApp $ do
           -- Check there is one movies in DB.
           moviesCount <- runDB $ count ([] :: [Filter Movie])
           assertEq "Should be zero " moviesCount 1
+
+
+    describe "filter movies" $ do
+        it "returns 200 and an empty list" $ do
+          let imdbId = "imdbId" :: Text
+          get("/movies?title=mov&runtimeInMinutes=80&metascore=79&imdbRating=7.2&imdbVotes=1000" :: Text)
+          statusIs 200
+          bodyContains "movies"
+          bodyNotContains $ unpack imdbId
+          -- Check there are no movies in DB.
+          moviesCount <- runDB $ count ([] :: [Filter Movie])
+          assertEq "Should be zero " moviesCount 0
+
+        it "returns 200 and a non-empty list" $ do
+          let imdbId = "imdbId" :: Text
+              testMovie = getTestMovie imdbId
+          _ <- runDB $ insert testMovie
+
+          get("/movies?title=mov&runtimeInMinutes=80&metascore=79&imdbRating=7.2&imdbVotes=1000" :: Text)
+          statusIs 200
+          bodyContains "movies"
+          bodyContains $ unpack imdbId
+          -- Check there is one movies in DB.
+          moviesCount <- runDB $ count ([] :: [Filter Movie])
+          assertEq "Should be zero " moviesCount 1
