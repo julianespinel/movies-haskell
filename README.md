@@ -28,6 +28,11 @@ stack test --flag movies:library-only --flag movies:dev
 
 (Because `yesod devel` passes the `library-only` and `dev` flags, matching those flags means you don't need to recompile between tests and development, and it disables optimization to speed up your test compile times).
 
+**Test with code coverage**
+
+1. `stack test --coverage --flag movies:library-only --flag movies:dev`
+1. `firefox $(stack path --local-hpc-root)/index.html`
+
 ## Usage
 
 With the movies microservice you are able to execute the following actions:
