@@ -2,7 +2,6 @@
 
 module Handler.Movie where
 
--- import qualified Data.HashMap.Strict as Map
 import Import
 
 movieNotFoundError :: Value
