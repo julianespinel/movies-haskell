@@ -44,7 +44,7 @@ Each API call is specified below:
 ### 1. Check if microservice is alive
 **Request**
 ```
-curl http://localhost:3000/admin/ping
+curl http://localhost:3000/admin/ping | json_pp
 ```
 
 **Response**
@@ -57,7 +57,7 @@ curl http://localhost:3000/admin/ping
 ### 2. Create a movie
 **Request**
 ```
-curl -H "Content-Type: application/json" \
+response=$(curl -H "Content-Type: application/json" \
        -X POST http://localhost:3000/movies \
        -d @- << EOF
 {
@@ -73,7 +73,8 @@ curl -H "Content-Type: application/json" \
   "imdbRating": 8.7,
   "imdbVotes": 1023621
 }
-EOF
+EOF)
+echo $response | json_pp
 ```
 
 **Response**
@@ -99,7 +100,7 @@ EOF
 ### 3. Find a specific movie
 **Request**
 ```
-curl http://localhost:3000/movies/tt0133093
+curl http://localhost:3000/movies/tt0133093 | json_pp
 ```
 
 **Response**
@@ -125,7 +126,7 @@ curl http://localhost:3000/movies/tt0133093
 ### 4. Find a set of movies
 **Request**
 ```
-curl -sb -H "Accept: application/json" "http://localhost:3000/movies?title=Matrix&runtimeInMinutes=130&metascore=6&imdbRating=7.2&imdbVotes=1000"
+curl -sb -H "Accept: application/json" "http://localhost:3000/movies?title=Matrix&runtimeInMinutes=130&metascore=6&imdbRating=7.2&imdbVotes=1000" | json_pp
 ```
 
 **Response**
@@ -153,7 +154,7 @@ curl -sb -H "Accept: application/json" "http://localhost:3000/movies?title=Matri
 ### 5. Update a movie
 **Request**
 ```
-curl -H "Content-Type: application/json" \
+response=$(curl -H "Content-Type: application/json" \
 -X PUT http://localhost:3000/movies/tt0133093 \
 -d @- << EOF
 {
@@ -169,7 +170,8 @@ curl -H "Content-Type: application/json" \
     "imdbRating": 8.7,
     "imdbVotes": 1023621
 }
-EOF
+EOF)
+echo $response | json_pp
 ```
 
 **Response**
@@ -195,7 +197,7 @@ EOF
 ### 6. Delete a movie
 **Request**
 ```
-curl -X DELETE http://localhost:3000/movies/tt0133093
+curl -X DELETE http://localhost:3000/movies/tt0133093 | json_pp
 ```
 
 **Response**
