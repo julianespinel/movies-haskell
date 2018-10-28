@@ -69,8 +69,7 @@ spec = withApp $ do
 
           performMethod "DELETE" ("/movies/" ++ imdbId :: Text)
           statusIs 200
-          bodyContains "deleted"
-          bodyContains "true"
+          bodyContains "{\"deleted\":true}"
 
           -- Check there are no movies in DB.
           moviesCount <- runDB $ count ([] :: [Filter Movie])
@@ -79,5 +78,4 @@ spec = withApp $ do
         it "returns 200 even if the movie does not exist" $ do
           performMethod "DELETE" ("/movies/123movie" :: Text)
           statusIs 200
-          bodyContains "deleted"
-          bodyContains "true"
+          bodyContains "{\"deleted\":true}"
