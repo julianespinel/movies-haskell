@@ -20,3 +20,4 @@ spec = withApp $ do
         it "returns 404 when movie does not exist" $ do
           get("/movies/123movie" :: Text)
           statusIs 404
+          bodyContains "Movie does not exist"
