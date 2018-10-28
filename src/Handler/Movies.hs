@@ -13,13 +13,13 @@ postMoviesR = do
     -- (The ToJSON and FromJSON instances are derived in the config/models file).
     movie <- requireJsonBody :: Handler Movie
     insertedMovie <- runDB $ insertEntity movie
-    sendStatusJSON created201 insertedMovie
+    sendStatusJSON created201 (object ["movie" .= insertedMovie])
 
 getMoviesR :: Handler Value
 getMoviesR = do
   params <- reqGetParams <$> getRequest
   movies <- getMovies params
-  returnJson movies
+  returnJson $ object ["movies" .= movies]
 
 getMovies :: [a] -> Handler [Entity Movie]
 getMovies [] = runDB $ selectList [] []
