@@ -25,9 +25,6 @@ getMovies :: [a] -> Handler [Entity Movie]
 getMovies [] = runDB $ selectList [] []
 getMovies _ = getMoviesFilter
 
-getAllMovies :: Handler [Entity Movie]
-getAllMovies = runDB $ selectList [] [] :: Handler [Entity Movie]
-
 wrap :: Text -> Maybe Text -> Maybe Text
 wrap wrapper (Just word) = Just(wrapper ++ word ++ wrapper)
 wrap wrapper Nothing     = Just(wrapper)
