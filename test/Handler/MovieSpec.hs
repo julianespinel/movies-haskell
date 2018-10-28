@@ -60,3 +60,24 @@ spec = withApp $ do
 
           statusIs 404
           bodyContains "Movie does not exist"
+
+    describe "delete movie" $ do
+        it "returns 200 and deletes the movie if it exists" $ do
+          let imdbId = "imdbId" :: Text
+              testMovie = getTestMovie imdbId
+          _ <- runDB $ insert testMovie
+
+          performMethod "DELETE" ("/movies/" ++ imdbId :: Text)
+          statusIs 200
+          bodyContains "deleted"
+          bodyContains "true"
+
+          -- Check there are no movies in DB.
+          moviesCount <- runDB $ count ([] :: [Filter Movie])
+          assertEq "Should be zero " moviesCount 0
+
+        it "returns 200 even if the movie does not exist" $ do
+          performMethod "DELETE" ("/movies/123movie" :: Text)
+          statusIs 200
+          bodyContains "deleted"
+          bodyContains "true"
