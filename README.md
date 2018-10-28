@@ -79,18 +79,20 @@ EOF
 **Response**
 ```json
 {
-    "imdbRating": 8.7,
-    "metascore": 73,
-    "director": "The Wachowski brothers",
-    "runtimeInMinutes": 136,
-    "imdbVotes": 1023621,
-    "imdbId": "tt0133093",
-    "plot": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
-    "id": "tt0133093",
-    "releaseDate": "1999-03-31T00:00:00Z",
-    "title": "The Matrix",
-    "genre": "Action, Sci-Fi",
-    "filmRating": "R"
+    "movie": {
+        "imdbRating": 8.7,
+        "metascore": 73,
+        "director": "The Wachowski brothers",
+        "runtimeInMinutes": 136,
+        "imdbVotes": 1023621,
+        "imdbId": "tt0133093",
+        "plot": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+        "id": "tt0133093",
+        "releaseDate": "1999-03-31T00:00:00Z",
+        "title": "The Matrix",
+        "genre": "Action, Sci-Fi",
+        "filmRating": "R"
+    }
 }
 ```
 
@@ -128,22 +130,24 @@ curl -sb -H "Accept: application/json" "http://localhost:3000/movies?title=Matri
 
 **Response**
 ```json
-[
-    {
-        "imdbRating": 8.7,
-        "metascore": 73,
-        "director": "The Wachowski brothers",
-        "runtimeInMinutes": 136,
-        "imdbVotes": 1023621,
-        "imdbId": "tt0133093",
-        "plot": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
-        "id": "tt0133093",
-        "releaseDate": "1999-03-31T00:00:00Z",
-        "title": "The Matrix",
-        "genre": "Action, Sci-Fi",
-        "filmRating": "R"
-    }
-]
+{
+    "movies": [
+        {
+            "imdbRating": 8.7,
+            "metascore": 73,
+            "director": "The Wachowski brothers",
+            "runtimeInMinutes": 136,
+            "imdbVotes": 1023621,
+            "imdbId": "tt0133093",
+            "plot": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+            "id": "tt0133093",
+            "releaseDate": "1999-03-31T00:00:00Z",
+            "title": "The Matrix Reloaded",
+            "genre": "Action, Sci-Fi",
+            "filmRating": "R"
+        }
+    ]
+}
 ```
 
 ### 5. Update a movie
