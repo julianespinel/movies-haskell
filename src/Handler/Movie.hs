@@ -5,10 +5,15 @@ module Handler.Movie where
 -- import qualified Data.HashMap.Strict as Map
 import Import
 
+movieNotFoundError :: Value
+movieNotFoundError = object ["error" .= ("Movie does not exist" :: String)]
+
 getMovieR :: MovieId -> Handler Value
 getMovieR movieId = do
-  movie <- runDB $ get404 movieId
-  return $ object ["movie" .= (Entity movieId movie)]
+  maybeMovie <- runDB $ get movieId
+  case maybeMovie of
+    Just(movie) -> return $ object ["movie" .= (Entity movieId movie)]
+    Nothing -> sendStatusJSON notFound404 movieNotFoundError
 
 putMovieR :: MovieId -> Handler Value
 putMovieR movieId = do
