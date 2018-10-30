@@ -30,7 +30,7 @@ spec = withApp $ do
               testMovie = getTestMovie imdbId
           _ <- runDB $ insert testMovie
 
-          let updatedTitle = "Matrix reloaded"
+          let updatedTitle = "The Matrix Reloaded"
               updatedMovie = testMovie { movieTitle = updatedTitle }
               encodedMovie = encode updatedMovie
 
@@ -50,7 +50,7 @@ spec = withApp $ do
           let imdbId = "imdbId" :: Text
               testMovie = getTestMovie imdbId
 
-          let updatedTitle = "Matrix reloaded"
+          let updatedTitle = "The Matrix Reloaded"
               updatedMovie = testMovie { movieTitle = updatedTitle }
               encodedMovie = encode updatedMovie
 
